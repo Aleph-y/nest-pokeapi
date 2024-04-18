@@ -1,0 +1,1 @@
+export { seedPokemon } from './pokemon';
