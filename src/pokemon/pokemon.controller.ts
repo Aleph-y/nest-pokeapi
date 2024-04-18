@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { PokemonService } from './pokemon.service';
 import { CreatePokemonDto, UpdatePokemonDto } from './dto';
@@ -37,5 +38,10 @@ export class PokemonController {
   @Delete(':pokedex')
   remove(@Param('pokedex') pokedex: string) {
     return this.pokemonService.remove(+pokedex);
+  }
+
+  @Put()
+  port() {
+    return this.pokemonService.port();
   }
 }

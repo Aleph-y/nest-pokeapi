@@ -9,12 +9,18 @@ import { CreatePokemonDto, UpdatePokemonDto } from './dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Pokemon } from './entities';
 import { Model } from 'mongoose';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class PokemonService {
+  private portNumber: number;
+
   constructor(
     @InjectModel(Pokemon.name) private readonly pokemon: Model<Pokemon>,
-  ) {}
+    private readonly config: ConfigService,
+  ) {
+    this.portNumber = this.config.get<number>('API_PORT');
+  }
 
   async create(data: CreatePokemonDto) {
     try {
@@ -77,5 +83,9 @@ export class PokemonService {
       if (error.status === HttpStatus.NOT_FOUND) throw new NotFoundException();
       throw new InternalServerErrorException();
     }
+  }
+
+  port() {
+    return this.portNumber;
   }
 }

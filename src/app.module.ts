@@ -4,15 +4,18 @@ import { join } from 'path';
 import { PokemonModule } from './pokemon/pokemon.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SeedModule } from './seed/seed.module';
+import { ConfigModule } from '@nestjs/config';
+import { envConfiguration } from './config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      load: [envConfiguration],
+    }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
-    MongooseModule.forRoot(
-      'mongodb+srv://Monthly9724:ZmpFMglaS75II7Hv@cursos.zxgsznx.mongodb.net/pokemon?retryWrites=true&w=majority',
-    ),
+    MongooseModule.forRoot(process.env.PRODUCT_MONGODB_URL),
     PokemonModule,
     SeedModule,
   ],
