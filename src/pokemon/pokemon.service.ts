@@ -86,6 +86,6 @@ export class PokemonService {
   }
 
   port() {
-    return this.portNumber;
+    return { port: this.portNumber };
   }
 }
